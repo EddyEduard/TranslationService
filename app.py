@@ -35,8 +35,10 @@ print_every - show the status of the algorithm for each number of completed epoc
 
 '''
 
+
 def train_model(name, first_language, second_language, datasets_path, count_words, max_length, interation, learning_rate, hidden_size, dropout_p, teacher_forcing_ratio, print_every):
-    data = PrepareData(first_language, second_language, datasets_path, count_words)
+    data = PrepareData(first_language, second_language,
+                       datasets_path, count_words)
     source_sentence, target_sentence, sentence_pairs = data.process()
 
     seq2seq = Seq2Seq(interation=interation,
@@ -52,6 +54,7 @@ def train_model(name, first_language, second_language, datasets_path, count_word
     seq2seq.save(name)
     seq2seq.train()
 
+
 '''
 
 Prepare a trained model for testing.
@@ -65,8 +68,10 @@ max_length - maximum sentence length
 
 '''
 
+
 def prepare_model(name, first_language, second_language, datasets_path, count_words, max_length):
-    data = PrepareData(first_language, second_language, datasets_path, count_words)
+    data = PrepareData(first_language, second_language,
+                       datasets_path, count_words)
     source_sentence, target_sentence, sentence_pairs = data.process()
 
     seq2seq = Seq2Seq(hidden_size=256, max_length=max_length, dropout_p=0.1)
@@ -75,6 +80,7 @@ def prepare_model(name, first_language, second_language, datasets_path, count_wo
     seq2seq.test(name)
 
     return seq2seq
+
 
 '''
 
@@ -87,6 +93,7 @@ datasets_path - datasets path
 
 '''
 
+
 def translate(text, first_language, second_language, datasets_path):
     if re.search(r"([.!?])", text):
         text_split = re.split(r"([.!?])", text)
@@ -98,27 +105,38 @@ def translate(text, first_language, second_language, datasets_path):
                     text_split[i - 1].lower(),  text_split[i])
 
                 if len(sentence.split(" ")) == 2:
-                    model = prepare_model("model-1", first_language, second_language, datasets_path, 1, 5)
+                    model = prepare_model(
+                        "model-1", first_language, second_language, datasets_path, 1, 5)
                 elif len(sentence.split(" ")) == 3:
-                    model = prepare_model("model-2", first_language, second_language, datasets_path, 2, 10)
+                    model = prepare_model(
+                        "model-2", first_language, second_language, datasets_path, 2, 10)
                 elif len(sentence.split(" ")) == 4:
-                    model = prepare_model("model-3", first_language, second_language, datasets_path, 3, 10)
+                    model = prepare_model(
+                        "model-3", first_language, second_language, datasets_path, 3, 10)
                 elif len(sentence.split(" ")) == 5:
-                    model = prepare_model("model-4", first_language, second_language, datasets_path, 4, 15)
+                    model = prepare_model(
+                        "model-4", first_language, second_language, datasets_path, 4, 15)
                 elif len(sentence.split(" ")) == 6:
-                    model = prepare_model("model-5", first_language, second_language, datasets_path, 5, 20)
+                    model = prepare_model(
+                        "model-5", first_language, second_language, datasets_path, 5, 20)
                 elif len(sentence.split(" ")) == 7:
-                    model = prepare_model("model-6", first_language, second_language, datasets_path, 6, 25)
+                    model = prepare_model(
+                        "model-6", first_language, second_language, datasets_path, 6, 25)
                 elif len(sentence.split(" ")) == 8:
-                    model = prepare_model("model-7", first_language, second_language, datasets_path, 7, 30)
+                    model = prepare_model(
+                        "model-7", first_language, second_language, datasets_path, 7, 30)
                 elif len(sentence.split(" ")) == 9:
-                    model = prepare_model("model-8", first_language, second_language, datasets_path, 8, 35)
+                    model = prepare_model(
+                        "model-8", first_language, second_language, datasets_path, 8, 35)
                 elif len(sentence.split(" ")) == 10:
-                    model = prepare_model("model-9", first_language, second_language, datasets_path, 9, 40)
+                    model = prepare_model(
+                        "model-9", first_language, second_language, datasets_path, 9, 40)
                 elif len(sentence.split(" ")) == 11:
-                    model = prepare_model("model-10", first_language, second_language, datasets_path, 10, 45)
+                    model = prepare_model(
+                        "model-10", first_language, second_language, datasets_path, 10, 45)
                 elif len(sentence.split(" ")) == 12:
-                    model = prepare_model("model-11", first_language, second_language, datasets_path, 11, 50)
+                    model = prepare_model(
+                        "model-11", first_language, second_language, datasets_path, 11, 50)
 
                 sentence = re.sub(r"'", " ", sentence)
 
@@ -130,17 +148,23 @@ def translate(text, first_language, second_language, datasets_path):
 
         return translate
 
+
 name = environ.get("TS_MODEL_NAME") or os.getenv("TS_MODEL_NAME")
-first_language = environ.get("TS_FIRST_LANGUAGE") or os.getenv("TS_FIRST_LANGUAGE")
-second_language = environ.get("TS_SECOND_LANGUAGE") or os.getenv("TS_SECOND_LANGUAGE")
-datasets_path = environ.get("TS_DATASETS_PATH") or os.getenv("TS_DATASETS_PATH")
-count_words = environ.get("TS_COUNT_WORDS") or os.getenv("TS_COUNT_WORDS") 
-max_length = environ.get("TS_MAX_LENGTH") or os.getenv("TS_MAX_LENGTH") 
+first_language = environ.get(
+    "TS_FIRST_LANGUAGE") or os.getenv("TS_FIRST_LANGUAGE")
+second_language = environ.get(
+    "TS_SECOND_LANGUAGE") or os.getenv("TS_SECOND_LANGUAGE")
+datasets_path = environ.get(
+    "TS_DATASETS_PATH") or os.getenv("TS_DATASETS_PATH")
+count_words = environ.get("TS_COUNT_WORDS") or os.getenv("TS_COUNT_WORDS")
+max_length = environ.get("TS_MAX_LENGTH") or os.getenv("TS_MAX_LENGTH")
 interation = environ.get("TS_INTERATION") or os.getenv("TS_INTERATION")
-learning_rate = environ.get("TS_LEARNING_RATE") or os.getenv("TS_LEARNING_RATE")
+learning_rate = environ.get(
+    "TS_LEARNING_RATE") or os.getenv("TS_LEARNING_RATE")
 hidden_size = environ.get("TS_HIDDEN_SIZE") or os.getenv("TS_HIDDEN_SIZE")
 dropout_p = environ.get("TS_DROPOUT_P") or os.getenv("TS_DROPOUT_P")
-teacher_forcing_ratio = environ.get("TS_TEACHER_FORCING_RATIO") or os.getenv("TS_TEACHER_FORCING_RATIO") 
+teacher_forcing_ratio = environ.get(
+    "TS_TEACHER_FORCING_RATIO") or os.getenv("TS_TEACHER_FORCING_RATIO")
 print_every = environ.get("TS_PRINT_EVERY") or os.getenv("TS_PRINT_EVERY")
 
 # Train a new model.
@@ -157,9 +181,12 @@ print_every = environ.get("TS_PRINT_EVERY") or os.getenv("TS_PRINT_EVERY")
 
 # Test the trained models using a REST API route.
 
+
 @app.route("/translate", methods=["POST"])
 def translate_text():
     return translate(request.data.decode("UTF-8"), first_language, second_language, datasets_path)
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True, threaded=True)
+    app.run(host=os.getenv("HOST"), port=os.getenv(
+        "PORT"), debug=True, threaded=True)

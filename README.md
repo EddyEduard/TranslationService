@@ -11,6 +11,96 @@ Below is a list of all the technologies used to develop the app. They are struct
    - Flask
    - PyTorch
 
+## Environment variables
+
+Before running the application, is necessary to set the environment variables used by the application. For this, a file named **.env** must be created. This file will contain all environment variables.
+
+The environment variables that are used by the application are:
+
+```
+HOST = "0.0.0.0"
+```
+
+The **HOST** variable contains the IP address where the application is running.
+
+```
+PORT = 8080
+```
+
+The **PORT** variable contains the port where the application is running.
+
+```
+TS_MODEL_NAME = "<<your model name>>"
+```
+
+The **TS_MODEL_NAME** variable contains the name of the model.
+
+```
+TS_FIRST_LANGUAGE = "English"
+```
+
+The **TS_FIRST_LANGUAGE** variable contains the name of the first language.
+
+```
+TS_SECOND_LANGUAGE = "Romanian"
+```
+
+The **TS_SECOND_LANGUAGE** variable contains the name of the second language.
+
+```
+TS_DATASETS_PATH = "data/en-ro.txt"
+```
+
+The **TS_DATASETS_PATH** variable contains the datasets path.
+
+```
+TS_COUNT_WORDS = 12
+```
+
+The **TS_COUNT_WORDS** variable contains the count of words.
+
+```
+TS_MAX_LENGTH = 55
+```
+
+The **TS_MAX_LENGTH** variable contains the max length of statement.
+
+```
+TS_INTERATION = 1000000
+```
+
+The **TS_INTERATION** variable contains the number of interations.
+
+```
+TS_LEARNING_RATE = 0.001
+```
+
+The **TS_LEARNING_RATE** variable contains the learning rate.
+
+```
+TS_HIDDEN_SIZE = 256
+```
+
+The **TS_HIDDEN_SIZE** variable contains the number of hidden nodes.
+
+```
+TS_DROPOUT_P = 0.5
+```
+
+The **TS_DROPOUT_P** variable contains the dropout value.
+
+```
+TS_TEACHER_FORCING_RATIO = 0.5
+```
+
+The **TS_TEACHER_FORCING_RATIO** variable contains the teacher forcing ratio.
+
+```
+TS_PRINT_EVERY = 1000
+```
+
+The **TS_PRINT_EVERY** variable contains the value to print the state of the training model after each interacted number.
+
 ## Run & Build commands
 
 The application is developed using the python.

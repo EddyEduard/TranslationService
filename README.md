@@ -49,6 +49,34 @@ The decoder generates the output sequence from the context vector provided by th
 
 The current application has been trained to translate paragraphs with maximum 7 words from **English** to **Romanian**.
 
+## Contarization
+
+For contarization the service was used [Docker](https://www.docker.com/). It is recommended to use Docker containers for training a new model. 
+
+To create a new Docker image for this service, run the following command:
+```
+docker build . -t translation-service:1.0
+```
+
+After finishing training a model, it is necessary to save the states (coefficients, parameters, etc.) of the model in a certain place. Since it is possible to have many containers created from the same Docker image, it would be very difficult to retrieve every state of the model after it has been trained. Thus, we can create a volume to store all the states of the trained model. 
+
+To create a volume for storing models, run the following command:
+```
+docker volume create translation-service-models
+```
+
+After creating the image and volume, the next step is to create the containers. Each container can be specialized to train a different model. The only thing that needs to be done is to set the environment variables that specify the parameters used to train the model.
+
+To create a container, run the following command:
+```
+docker run -itd --name translation-service-12-words -e TS_MODEL_NAME="model-12" -e TS_FIRST_LANGUAGE="English" -e TS_SECOND_LANGUAGE="Romanian" -e TS_DATASETS_PATH="data/en-ro.txt" -e TS_COUNT_WORDS=12 -e TS_MAX_LENGTH=55 -e TS_INTERATION=1000000 -e TS_LEARNING_RATE=0.001 -v translation-service-models:/TranslationService/models translation-service:1.0
+```
+
+Finally, the following command must be executed to start model training:
+```
+docker exec -it [CONTAINER ID] pm2 start app.py --no-autorestart
+```
+
 ## License
 Distributed under the MIT License. See [MIT](https://github.com/EddyEduard/TranslationService/blob/master/LICENSE) for more information.
 

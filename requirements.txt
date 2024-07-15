@@ -1,2 +1,4 @@
+numpy==1.26.4
 Flask==2.2.3
-torch==1.13.1
+python-dotenv==0.10.1
+torch==2.3.1

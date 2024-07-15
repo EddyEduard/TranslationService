@@ -24,7 +24,7 @@ HOST = "0.0.0.0"
 The **HOST** variable contains the IP address where the application is running.
 
 ```
-PORT = 8080
+PORT = 7000
 ```
 
 The **PORT** variable contains the port where the application is running.

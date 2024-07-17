@@ -60,7 +60,7 @@ TS_COUNT_WORDS = 12
 The **TS_COUNT_WORDS** variable contains the count of words.
 
 ```
-TS_MAX_LENGTH = 55
+TS_MAX_LENGTH = 50
 ```
 
 The **TS_MAX_LENGTH** variable contains the max length of statement.
@@ -159,7 +159,7 @@ After creating the image and volume, the next step is to create the containers. 
 
 To create a container, run the following command:
 ```
-docker run -itd --name translation-service-12-words -e TS_MODEL_NAME="model-12" -e TS_FIRST_LANGUAGE="English" -e TS_SECOND_LANGUAGE="Romanian" -e TS_DATASETS_PATH="data/en-ro.txt" -e TS_COUNT_WORDS=12 -e TS_MAX_LENGTH=55 -e TS_INTERATION=1000000 -e TS_LEARNING_RATE=0.001 -v translation-service-models:/TranslationService/models translation-service:1.0
+docker run -itd --name translation-service-12-words -e TS_MODEL_NAME="model-12" -e TS_FIRST_LANGUAGE="English" -e TS_SECOND_LANGUAGE="Romanian" -e TS_DATASETS_PATH="data/en-ro.txt" -e TS_COUNT_WORDS=12 -e TS_MAX_LENGTH=50 -e TS_INTERATION=1000000 -e TS_LEARNING_RATE=0.001 -v translation-service-models:/TranslationService/models translation-service:1.0
 ```
 
 Finally, the following command must be executed to start model training:

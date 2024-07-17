@@ -102,7 +102,7 @@ def translate(text, first_language, second_language, datasets_path):
         for i in range(0, len(text_split)):
             if re.search(r"([.!?])", text_split[i]):
                 sentence = "{0} {1}".format(
-                    text_split[i - 1].lower(),  text_split[i])
+                    text_split[i - 1].lower(),  text_split[i]).strip()
 
                 if len(sentence.split(" ")) == 2:
                     model = prepare_model(
@@ -133,18 +133,21 @@ def translate(text, first_language, second_language, datasets_path):
                         "model-9", first_language, second_language, datasets_path, 9, 40)
                 elif len(sentence.split(" ")) == 11:
                     model = prepare_model(
-                        "model-10", first_language, second_language, datasets_path, 10, 45)
+                        "model-10", first_language, second_language, datasets_path, 10, 40)
                 elif len(sentence.split(" ")) == 12:
                     model = prepare_model(
-                        "model-11", first_language, second_language, datasets_path, 11, 50)
+                        "model-11", first_language, second_language, datasets_path, 11, 45)
+                else:
+                    model = None
 
-                sentence = re.sub(r"'", " ", sentence)
+                sentence = re.sub(r"'", " ", sentence.replace(",", ""))
 
-                output = model.predict(sentence).capitalize()
-                output = re.sub(r" ([.!?])", re.search(
-                    r"([.!?])", sentence).group(1), output)
+                if model is not None:
+                    output = model.predict(sentence).capitalize()
+                    output = re.sub(r" ([.!?])", re.search(
+                        r"([.!?])", sentence).group(1), output)
 
-                translate += output
+                    translate += output
 
         return translate
 
@@ -170,13 +173,15 @@ print_every = environ.get("TS_PRINT_EVERY") or os.getenv("TS_PRINT_EVERY")
 # Train a new model.
 
 # if name is not None and count_words is not None and max_length is not None:
-#     train_model(name, first_language, second_language, datasets_path, int(count_words), int(max_length), int(interation), float(learning_rate), int(hidden_size), float(dropout_p), float(teacher_forcing_ratio), int(print_every))
+#     train_model(name, first_language, second_language, datasets_path, int(count_words), int(max_length), int(
+#         interation), float(learning_rate), int(hidden_size), float(dropout_p), float(teacher_forcing_ratio), int(print_every))
 
 # Test the trained models using the command line.
 
-# while(True):
+# while (True):
 #     print("Enter a sentence: ")
-#     translated = translate(input(), first_language, second_language, datasets_path)
+#     translated = translate(input(), first_language,
+#                            second_language, datasets_path)
 #     print(translated)
 
 # Test the trained models using a REST API route.

@@ -1,14 +1,14 @@
-from __future__ import unicode_literals, print_function, division
 import os
-from torch import optim
-from encoder import EncoderRNN
-from decoder import AttentionDecoderRNN
-
 import time
 import math
 import random
 import torch
 import torch.nn as nn
+
+from __future__ import unicode_literals, print_function, division
+from torch import optim
+from encoder import EncoderRNN
+from decoder import AttentionDecoderRNN
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

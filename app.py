@@ -1,15 +1,10 @@
 import os
 import re
 
-from os import environ
-from dotenv import load_dotenv
-from utils.prepare_data import PrepareData
-from seq2seq import Seq2Seq
+from config import Config
 from flask import Flask, request
-
-# Load environment variables.
-
-load_dotenv()
+from seq2seq import Seq2Seq
+from utils.prepare_data import PrepareData
 
 # Init Flask app.
 
@@ -137,6 +132,18 @@ def translate(text, first_language, second_language, datasets_path):
                 elif len(sentence.split(" ")) == 12:
                     model = prepare_model(
                         "model-11", first_language, second_language, datasets_path, 11, 45)
+                elif len(sentence.split(" ")) == 13:
+                    model = prepare_model(
+                        "model-12", first_language, second_language, datasets_path, 12, 50)
+                elif len(sentence.split(" ")) == 14:
+                    model = prepare_model(
+                        "model-13", first_language, second_language, datasets_path, 13, 55)
+                elif len(sentence.split(" ")) == 15:
+                    model = prepare_model(
+                        "model-14", first_language, second_language, datasets_path, 14, 60)
+                elif len(sentence.split(" ")) == 16:
+                    model = prepare_model(
+                        "model-16", first_language, second_language, datasets_path, 15, 65)
                 else:
                     model = None
 
@@ -152,23 +159,22 @@ def translate(text, first_language, second_language, datasets_path):
         return translate
 
 
-name = environ.get("TS_MODEL_NAME") or os.getenv("TS_MODEL_NAME")
-first_language = environ.get(
-    "TS_FIRST_LANGUAGE") or os.getenv("TS_FIRST_LANGUAGE")
-second_language = environ.get(
-    "TS_SECOND_LANGUAGE") or os.getenv("TS_SECOND_LANGUAGE")
-datasets_path = environ.get(
-    "TS_DATASETS_PATH") or os.getenv("TS_DATASETS_PATH")
-count_words = environ.get("TS_COUNT_WORDS") or os.getenv("TS_COUNT_WORDS")
-max_length = environ.get("TS_MAX_LENGTH") or os.getenv("TS_MAX_LENGTH")
-interation = environ.get("TS_INTERATION") or os.getenv("TS_INTERATION")
-learning_rate = environ.get(
-    "TS_LEARNING_RATE") or os.getenv("TS_LEARNING_RATE")
-hidden_size = environ.get("TS_HIDDEN_SIZE") or os.getenv("TS_HIDDEN_SIZE")
-dropout_p = environ.get("TS_DROPOUT_P") or os.getenv("TS_DROPOUT_P")
-teacher_forcing_ratio = environ.get(
-    "TS_TEACHER_FORCING_RATIO") or os.getenv("TS_TEACHER_FORCING_RATIO")
-print_every = environ.get("TS_PRINT_EVERY") or os.getenv("TS_PRINT_EVERY")
+# Parameters of the model.
+
+config = Config()
+
+name = config.getenv("TS_MODEL_NAME")
+first_language = config.getenv("TS_FIRST_LANGUAGE")
+second_language = config.getenv("TS_SECOND_LANGUAGE")
+datasets_path = config.getenv("TS_DATASETS_PATH")
+count_words = config.getenv("TS_COUNT_WORDS")
+max_length = config.getenv("TS_MAX_LENGTH")
+interation = config.getenv("TS_INTERATION")
+learning_rate = config.getenv("TS_LEARNING_RATE")
+hidden_size = config.getenv("TS_HIDDEN_SIZE")
+dropout_p = config.getenv("TS_DROPOUT_P")
+teacher_forcing_ratio = config.getenv("TS_TEACHER_FORCING_RATIO")
+print_every = config.getenv("TS_PRINT_EVERY")
 
 # Train a new model.
 

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, print_function, division
+
 import os
 import time
 import math
@@ -5,7 +7,6 @@ import random
 import torch
 import torch.nn as nn
 
-from __future__ import unicode_literals, print_function, division
 from torch import optim
 from encoder import EncoderRNN
 from decoder import AttentionDecoderRNN
@@ -25,6 +26,7 @@ Sequence to Sequence
     2. Decoder
 
 '''
+
 
 class Seq2Seq:
 
@@ -50,7 +52,6 @@ class Seq2Seq:
         self.dropout_p = dropout_p
         self.teacher_forcing_ratio = teacher_forcing_ratio
         self.print_every = print_every
-
 
     '''
     
@@ -119,7 +120,7 @@ class Seq2Seq:
         es = s / (percent)
         rs = es - s
         return '%s (- %s)' % (self.__as_minutes(s), self.__as_minutes(rs))
-    
+
     '''
     
     Perform a single interation from training
@@ -145,7 +146,7 @@ class Seq2Seq:
 
         # Perform forward propagation through encoder for a sentence
 
-        encoder_hidden = self.encoder.init_hidden() 
+        encoder_hidden = self.encoder.init_hidden()
         encoder_context = self.encoder.init_context()
 
         encoder_outputs = torch.zeros(
@@ -210,7 +211,7 @@ class Seq2Seq:
 
         encoder_optimizer = optim.SGD(
             self.encoder.parameters(), lr=self.learning_rate)
-        
+
         # Initialization of the stochastic gradient descent for the decoder
 
         decoder_optimizer = optim.SGD(
@@ -224,7 +225,7 @@ class Seq2Seq:
 
         random_pairs = [random.choice(self.sentence_pairs)
                         for i in range(self.interation)]
-        
+
         # Perform each interation
 
         for iteration in range(1, self.interation + 1):
@@ -233,7 +234,7 @@ class Seq2Seq:
 
             source_tensor = self.source_sentence.tensor_from_sentence(
                 random_pairs[iteration - 1][0])
-            
+
             # Tokenization of the terget sentence
 
             target_tensor = self.target_sentence.tensor_from_sentence(
@@ -282,7 +283,7 @@ class Seq2Seq:
 
                 source_tensor = self.source_sentence.tensor_from_sentence(
                     sentence)
-                
+
                 source_length = source_tensor.size()[0]
 
                 # Perform forward propagation through encoder for a sentence
